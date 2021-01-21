@@ -6,6 +6,7 @@ require_once("lib/gebruiker.php");
 require_once("lib/keuken_type.php");
 require_once("lib/recept_info.php");
 require_once("lib/ingredient.php");
+require_once("lib/recept.php");
 
 $db = new database();
 $conn = $db->getConnectie();
@@ -14,10 +15,18 @@ $gebr = new gebruiker($conn);
 $kt = new keuken_type($conn);
 $ri = new recept_info($conn);
 $ing = new ingredient($conn);
+$recept = new recept($conn);
 
 $artikel_id = 2;
 $gebruiker_id = 4;
 $keuken_type_id = [2, 6];
+$recept_id = 3;
+
+$data_recept = $recept->selecteerRecept($recept_id);
+echo"Dit is het hele recept: <br><br><pre>";
+var_dump($data_recept);
+
+echo"<br><br></pre>";
 
 $data_art = $art->selecteerArtikel($artikel_id);
 $data_gebr = $gebr->selecteerGebruiker($gebruiker_id);
@@ -79,6 +88,6 @@ $recept_id = 1;
 $gebruiker_id = 2;
 $ri->verwijderenFavoriet($recept_id, $gebruiker_id);
 
-$recept_id = 3;
+/* $recept_id = 3;
 $score = 5;
-$ri->gevenScore($recept_id, $score);
+$ri->gevenScore($recept_id, $score); */

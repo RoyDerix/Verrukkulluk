@@ -1,7 +1,5 @@
 <?php
 
-require_once("lib/gebruiker.php");
-
 class recept_info {
 
     private $connectie;

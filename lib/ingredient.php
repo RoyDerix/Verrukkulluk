@@ -1,7 +1,5 @@
 <?php
 
-require_once("lib/artikel.php");
-
 class ingredient {
 
     private $connectie;
@@ -40,7 +38,7 @@ class ingredient {
     }
 
     private function selecteerArtikel($artikel_id){
-        
+
         $artikel_info = $this->artikel->selecteerArtikel($artikel_id);
         return($artikel_info);
     }
