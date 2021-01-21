@@ -74,3 +74,11 @@ $data_ingredient = $ing->selecteerIngredient($recept_id);
 echo"<br><br><pre>";
 var_dump($data_ingredient);
 
+
+$recept_id = 1;
+$gebruiker_id = 2;
+$ri->verwijderenFavoriet($recept_id, $gebruiker_id);
+
+$recept_id = 3;
+$score = 5;
+$ri->gevenScore($recept_id, $score);

@@ -7,10 +7,27 @@ class recept_info {
     private $connectie;
     private $gebruiker;
 
-    public function __construct($connectie) {
+    public function gevenScore($recept_id, $score) {
+        $sql = "INSERT INTO recept_info (recept_id, record_type, datum, nummeriekveld)
+                VALUES ('$recept_id', 'S', NOW(), '$score')";
+        $result = mysqli_query($this->connectie, $sql);
+    }
 
-        $this->connectie = $connectie;
-        $this->gebruiker = new gebruiker($this->connectie); 
+    public function toevoegenFavoriet($recept_id, $gebruiker_id) {
+
+        $this->verwijderenFavoriet($recept_id, $gebruiker_id);
+
+        $sql = "INSERT INTO recept_info (recept_id, gebruiker_id, record_type, datum) 
+                VALUES ('$recept_id', '$gebruiker_id', 'F', NOW())";
+        $result = mysqli_query($this->connectie, $sql);  
+    }
+
+    public function verwijderenFavoriet($recept_id, $gebruiker_id) {
+
+        $sql = "DELETE FROM recept_info WHERE gebruiker_id = $gebruiker_id 
+                                        AND recept_id = $recept_id
+                                        AND record_type = 'F'";
+        $result = mysqli_query($this->connectie, $sql);
     }
 
     public function selecteerReceptinfo($recept_id, $record_type) {
@@ -49,5 +66,11 @@ class recept_info {
 
         $gebruiker_data = $this->gebruiker->selecteerGebruiker($gebruiker_id);
         return($gebruiker_data);
+    }
+
+    public function __construct($connectie) {
+
+        $this->connectie = $connectie;
+        $this->gebruiker = new gebruiker($this->connectie); 
     }
 }
