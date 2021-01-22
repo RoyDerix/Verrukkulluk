@@ -22,11 +22,12 @@ $gebruiker_id = 4;
 $keuken_type_id = [2, 6];
 $recept_id = 3;
 
-$data_recept = $recept->selecteerRecept($recept_id);
+$data_recept = $recept->ophalenRecept($recept_id, $gebruiker_id);
+echo"---------------------------------------------------------------------------------------------------------------------------------<br>";
 echo"Dit is het hele recept: <br><br><pre>";
 var_dump($data_recept);
 
-echo"<br><br></pre>";
+echo"<br></pre>---------------------------------------------------------------------------------------------------------------------------------<br>";
 
 $data_art = $art->selecteerArtikel($artikel_id);
 $data_gebr = $gebr->selecteerGebruiker($gebruiker_id);
