@@ -9,73 +9,112 @@ class recept {
     private $keuken_type;
     private $gebruiker;
 
-    public function ophalenRecept($recept_id, $gebruiker_id) {
+    public function ophalenRecept($gebruiker_id, $id = null) {
 
-        $recept = $this->selecteerRecept($recept_id);
-        $gem_score = $this->berekenenScore($recept_id);
-        $ingredienten = $this->ophalenIngredienten($recept_id);
-        $totale_prijs = $this->berekenenPrijs($recept_id);
-        $totale_calorieen = $this->berekenCalorieen($recept_id);
-        $mijnFavoriet = $this->vergelijkenFavoriet($recept_id, $gebruiker_id);
-        $keuken = $this->ophalenKeuken($recept_id);
-        $type = $this->ophalenType($recept_id);
-        $gebruiker = $this->ophalenGebruiker($recept_id);
-        $bereidingswijze = $this->ophalenBereidingswijze($recept_id);
-        $opmerkingen = $this->ophalenOpmerkingen($recept_id);
+        $receptTotaal = [];
+        $sql = "SELECT * FROM recept";
+        if($id != null) {
+            $sql .= " WHERE id = $id";
+        }
+        $result = mysqli_query($this->connectie, $sql);
 
-        $receptTotaal = [
-            "id"=>$recept['id'],
-            "titel_recept"=>$recept['titel_recept'],
-            "keuken"=>$keuken['omschrijving'],
-            "type"=>$type['omschrijving'],
-            "auteur"=>$gebruiker['gebruiker_naam'],
-            "receptbeschrijving"=>$recept['receptbeschrijving'],
-            "samenvatting_beschrijving"=>$recept['samenvatting_beschrijving'],
-            "receptfoto"=>$recept['receptfoto'],
-            "datum_toegevoegd"=>$recept['datum_toegevoegd'],
-            "score"=>$gem_score,
-            "totale_prijs"=>$totale_prijs,
-            "totale_calorieen"=>$totale_calorieen,
-            "mijn_favoriet"=>$mijnFavoriet,
-            "ingredienten"=>$ingredienten,
-            "bereidingswijze"=>$bereidingswijze,
-            "opmerkingen"=>$opmerkingen
-        ];
+        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+
+            $gem_score = $this->berekenenScore($row['id']);
+            $ingredienten = $this->ophalenIngredienten($row['id']);
+            $totale_prijs = $this->berekenenPrijs($ingredienten);
+            $totale_calorieen = $this->berekenCalorieen($ingredienten);
+            $mijnFavoriet = $this->vergelijkenFavoriet($row['id'], $gebruiker_id);
+            $keuken = $this->ophalenKeuken($row['keuken_id']);
+            $type = $this->ophalenType($row['type_id']);
+            $gebruiker = $this->ophalenGebruiker($row['gebruiker_id']);
+            $bereidingswijze = $this->ophalenBereidingswijze($row['id']);
+            $opmerkingen = $this->ophalenOpmerkingen($row['id']);
+
+            $ditRecept = [
+                "id"=>$row['id'],
+                "titel_recept"=>$row['titel_recept'],
+                "keuken"=>$keuken['omschrijving'],
+                "type"=>$type['omschrijving'],
+                "auteur"=>$gebruiker['gebruiker_naam'],
+                "receptbeschrijving"=>$row['receptbeschrijving'],
+                "samenvatting_beschrijving"=>$row['samenvatting_beschrijving'],
+                "receptfoto"=>$row['receptfoto'],
+                "datum_toegevoegd"=>$row['datum_toegevoegd'],
+                "score"=>$gem_score,
+                "totale_prijs"=>$totale_prijs,
+                "totale_calorieen"=>$totale_calorieen,
+                "mijn_favoriet"=>$mijnFavoriet,
+                "ingredienten"=>$ingredienten,
+                "bereidingswijze"=>$bereidingswijze,
+                "opmerkingen"=>$opmerkingen
+            ];
+            
+            $receptTotaal[] = $ditRecept;
+        }
 
         return($receptTotaal);
     }
 
-    private function ophalenGebruiker($recept_id) {
+    public function zoeken($keyword) {
 
-        $recept = $this->selecteerRecept($recept_id);
-        $gebruiker_id = $recept['gebruiker_id'];
+        $recept_ids = [];
+
+        $sql = "SELECT * FROM keuken_type WHERE omschrijving LIKE '%$keyword%'";
+        $result = mysqli_query($this->connectie, $sql);
+
+        if(mysqli_num_rows($result) != 0) {
+            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $keuken_type_id = $row['id'];
+
+            $sql = "SELECT * FROM recept WHERE keuken_id = $keuken_type_id
+                                            OR type_id = $keuken_type_id";
+            $result = mysqli_query($this->connectie, $sql);
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                $recept_id = $row['id'];
+                $recept_ids[] = $recept_id;
+            }
+        }
+
+        $sql = "SELECT * FROM artikel WHERE titel_artikel LIKE '%$keyword%'";
+        $result = mysqli_query($this->connectie, $sql);
+        if(mysqli_num_rows($result) != 0) {
+            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $artikel_id = $row['id'];
+
+            $sql = "SELECT * FROM ingredient WHERE artikel_id = $artikel_id";
+            $result = mysqli_query($this->connectie, $sql);
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                $recept_id = $row['recept_id'];
+                $recept_ids[] = $recept_id;
+            }
+        }
+
+        return($recept_ids);
+    }
+
+    private function ophalenGebruiker($gebruiker_id) {
+        
         $gebruiker = $this->gebruiker->selecteerGebruiker($gebruiker_id);
-
         return($gebruiker);
     }
 
-    private function ophalenType($recept_id) {
+    private function ophalenType($type_id) {
 
-        $recept = $this->selecteerRecept($recept_id);
-        $type_id = $recept['type_id'];
         $type = $this->keuken_type->selecteerKeukenType($type_id);
-
         return($type);
     }
 
-    private function ophalenKeuken($recept_id) {
+    private function ophalenKeuken($keuken_id) {
 
-        $recept = $this->selecteerRecept($recept_id);
-        $keuken_id = $recept['keuken_id'];
         $keuken = $this->keuken_type->selecteerKeukenType($keuken_id);
-
         return($keuken);
     }
 
     private function vergelijkenFavoriet($recept_id, $gebruiker_id) {
         
         $mijnFavoriet = FALSE;
-        $favorieten = $this->ophalenReceptinfo($recept_id, "F");
+        $favorieten = $this->recept_info->selecteerReceptinfo($recept_id, "F");
         foreach($favorieten as $favoriet) {
             if ($favoriet['gebruiker_id'] == $gebruiker_id) {
                 $mijnFavoriet = TRUE;
@@ -85,10 +124,9 @@ class recept {
         return($mijnFavoriet);
     }
 
-    private function berekenCalorieen($recept_id) {
+    private function berekenCalorieen($ingredienten) {
 
         $totale_calorieen = 0;
-        $ingredienten = $this->ophalenIngredienten($recept_id);
 
         foreach($ingredienten as $ingredient) {
             $aantal_verpakkingen = $ingredient['ingredienthoeveelheid'] / $ingredient['hoeveelheid'];
@@ -99,10 +137,9 @@ class recept {
         return(round($totale_calorieen));
     }
 
-    private function berekenenPrijs($recept_id) {
+    private function berekenenPrijs($ingredienten) {
 
         $totale_prijs = 0;
-        $ingredienten = $this->ophalenIngredienten($recept_id);
 
         foreach($ingredienten as $ingredient) {
             $aantal_verpakkingen = ceil($ingredient['ingredienthoeveelheid'] / $ingredient['hoeveelheid']);
@@ -117,7 +154,7 @@ class recept {
 
         $som_scores = 0;
         $aantal_scores = 0;
-        $data_scores = $this->ophalenReceptinfo($recept_id, "S");
+        $data_scores = $this->recept_info->selecteerReceptinfo($recept_id, "S");
         foreach($data_scores as $data_score) {
             $som_scores += $data_score['nummeriekveld'];
             $aantal_scores++;
@@ -126,33 +163,19 @@ class recept {
         return($gem_score);
     }
 
-    private function selecteerRecept($recept_id) {
-        
-        $sql = "SELECT * FROM recept WHERE id = $recept_id"; 
-        $result = mysqli_query($this->connectie, $sql);
-        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
-        return($row);
-    }
-
     private function ophalenBereidingswijze($recept_id) {
-        $bereidingswijze = $this->ophalenReceptinfo($recept_id, "B");
+        $bereidingswijze = $this->recept_info->selecteerReceptinfo($recept_id, "B");
         return($bereidingswijze);
     }
 
     private function ophalenOpmerkingen($recept_id) {
-        $opmerkingen = $this->ophalenReceptinfo($recept_id, "O");
+        $opmerkingen = $this->recept_info->selecteerReceptinfo($recept_id, "O");
         return($opmerkingen);
     }
 
     private function ophalenIngredienten($recept_id) {
         $data_ingredienten = $this->ingredienten->selecteerIngredient($recept_id);
         return($data_ingredienten);
-    }
-
-    private function ophalenReceptinfo($recept_id, $record_type) {
-        $data_scores = $this->recept_info->selecteerReceptinfo($recept_id, $record_type);
-        return($data_scores);
     }
 
     public function __construct($connectie) {

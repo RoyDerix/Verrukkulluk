@@ -7,6 +7,7 @@ require_once("lib/keuken_type.php");
 require_once("lib/recept_info.php");
 require_once("lib/ingredient.php");
 require_once("lib/recept.php");
+require_once("lib/boodschappenlijst.php");
 
 $db = new database();
 $conn = $db->getConnectie();
@@ -21,8 +22,14 @@ $artikel_id = 2;
 $gebruiker_id = 4;
 $keuken_type_id = [2, 6];
 $recept_id = 3;
+$keyword = "Pasta";
 
-$data_recept = $recept->ophalenRecept($recept_id, $gebruiker_id);
+$recept_ids = $recept->zoeken($keyword);
+echo "<pre>";
+var_dump($recept_ids);
+echo "<br><br></pre>";
+
+$data_recept = $recept->ophalenRecept($gebruiker_id);
 echo"---------------------------------------------------------------------------------------------------------------------------------<br>";
 echo"Dit is het hele recept: <br><br><pre>";
 var_dump($data_recept);
