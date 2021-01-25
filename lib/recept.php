@@ -9,7 +9,7 @@ class recept {
     private $keuken_type;
     private $gebruiker;
 
-    public function ophalenRecept($gebruiker_id, $id = null) {
+    public function ophalenRecept($gebruiker_id = null, $id = null) {
 
         $receptTotaal = [];
         $sql = "SELECT * FROM recept";
@@ -50,15 +50,15 @@ class recept {
                 "opmerkingen"=>$opmerkingen
             ];
             
-            $receptTotaal[] = $ditRecept;
+            $receptenTotaal[] = $ditRecept;
         }
 
-        return($receptTotaal);
+        return($receptenTotaal);
     }
 
-    public function zoeken($keyword) {
+    public function zoeken($keyword, $gebruiker_id = null) {
 
-        $recept_ids = [];
+        $recepten = [];
 
         $sql = "SELECT * FROM keuken_type WHERE omschrijving LIKE '%$keyword%'";
         $result = mysqli_query($this->connectie, $sql);
@@ -72,7 +72,8 @@ class recept {
             $result = mysqli_query($this->connectie, $sql);
             while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                 $recept_id = $row['id'];
-                $recept_ids[] = $recept_id;
+                $recept = $this->ophalenRecept($gebruiker_id, $recept_id);
+                $recepten[] = $recept;              
             }
         }
 
@@ -86,11 +87,12 @@ class recept {
             $result = mysqli_query($this->connectie, $sql);
             while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                 $recept_id = $row['recept_id'];
-                $recept_ids[] = $recept_id;
+                $recept = $this->ophalenRecept($gebruiker_id, $recept_id);
+                $recepten[] = $recept;
             }
         }
 
-        return($recept_ids);
+        return($recepten);
     }
 
     private function ophalenGebruiker($gebruiker_id) {
@@ -114,10 +116,12 @@ class recept {
     private function vergelijkenFavoriet($recept_id, $gebruiker_id) {
         
         $mijnFavoriet = FALSE;
-        $favorieten = $this->recept_info->selecteerReceptinfo($recept_id, "F");
-        foreach($favorieten as $favoriet) {
-            if ($favoriet['gebruiker_id'] == $gebruiker_id) {
-                $mijnFavoriet = TRUE;
+        if($gebruiker_id != null) {
+            $favorieten = $this->recept_info->selecteerReceptinfo($recept_id, "F");
+            foreach($favorieten as $favoriet) {
+                if ($favoriet['gebruiker_id'] == $gebruiker_id) {
+                    $mijnFavoriet = TRUE;
+                }
             }
         }
 
@@ -147,7 +151,7 @@ class recept {
             $totale_prijs += $prijs_ingredient;
         }
 
-        return(round($totale_prijs, 2));
+        return($totale_prijs);
     }
 
     private function berekenenScore($recept_id) {

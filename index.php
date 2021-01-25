@@ -17,19 +17,22 @@ $kt = new keuken_type($conn);
 $ri = new recept_info($conn);
 $ing = new ingredient($conn);
 $recept = new recept($conn);
+$boodschappenlijst = new boodschappenlijst($conn);
 
 $artikel_id = 2;
 $gebruiker_id = 4;
 $keuken_type_id = [2, 6];
 $recept_id = 3;
-$keyword = "Pasta";
+$keyword = "courgette";
+
+$boodschappenlijst->receptToevoegen(1, 2);
 
 $recept_ids = $recept->zoeken($keyword);
 echo "<pre>";
 var_dump($recept_ids);
 echo "<br><br></pre>";
 
-$data_recept = $recept->ophalenRecept($gebruiker_id);
+$data_recept = $recept->ophalenRecept(null, $recept_id);
 echo"---------------------------------------------------------------------------------------------------------------------------------<br>";
 echo"Dit is het hele recept: <br><br><pre>";
 var_dump($data_recept);
