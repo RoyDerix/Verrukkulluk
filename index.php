@@ -25,7 +25,7 @@ $keuken_type_id = [2, 6];
 $recept_id = 3;
 $keyword = "courgette";
 
-$boodschappenlijst->receptToevoegen(1, 2);
+$boodschappenlijst->receptToevoegen(4, 2);
 
 $recept_ids = $recept->zoeken($keyword);
 echo "<pre>";
