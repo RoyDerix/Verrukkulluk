@@ -56,45 +56,24 @@ class recept {
         return($receptenTotaal);
     }
 
+
     public function zoeken($keyword, $gebruiker_id = null) {
 
-        $recepten = [];
+        $lijst = [];
+        $alleRecepten = $this->ophalenRecept($gebruiker_id, null);
 
-        $sql = "SELECT * FROM keuken_type WHERE omschrijving LIKE '%$keyword%'";
-        $result = mysqli_query($this->connectie, $sql);
+        foreach($alleRecepten as $recept) {
 
-        if(mysqli_num_rows($result) != 0) {
-            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            $keuken_type_id = $row['id'];
-
-            $sql = "SELECT * FROM recept WHERE keuken_id = $keuken_type_id
-                                            OR type_id = $keuken_type_id";
-            $result = mysqli_query($this->connectie, $sql);
-            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                $recept_id = $row['id'];
-                $recept = $this->ophalenRecept($gebruiker_id, $recept_id);
-                $recepten[] = $recept;              
+            $recept_encode = json_encode($recept, JSON_INVALID_UTF8_IGNORE);
+            $recept_pos = stripos($recept_encode, $keyword);
+            if ($recept_pos !== false) {
+                $lijst[] = $recept;
             }
         }
 
-        $sql = "SELECT * FROM artikel WHERE titel_artikel LIKE '%$keyword%'";
-        $result = mysqli_query($this->connectie, $sql);
-        if(mysqli_num_rows($result) != 0) {
-            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            $artikel_id = $row['id'];
-
-            $sql = "SELECT * FROM ingredient WHERE artikel_id = $artikel_id";
-            $result = mysqli_query($this->connectie, $sql);
-            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                $recept_id = $row['recept_id'];
-                $recept = $this->ophalenRecept($gebruiker_id, $recept_id);
-                $recepten[] = $recept;
-            }
-        }
-
-        return($recepten);
+        return($lijst);
     }
-
+    
     private function ophalenGebruiker($gebruiker_id) {
         
         $gebruiker = $this->gebruiker->selecteerGebruiker($gebruiker_id);

@@ -23,18 +23,18 @@ $artikel_id = 2;
 $gebruiker_id = 4;
 $keuken_type_id = [2, 6];
 $recept_id = 3;
-$keyword = "courgette";
+$keyword = "mexicaans";
 
-$boodschappenlijst->receptToevoegen(3, 2);
+//$boodschappenlijst->receptToevoegen(3, 2);
 
 $recepten = $recept->zoeken($keyword);
 echo "<pre>";
 var_dump($recepten);
 echo "<br><br></pre>";
 
-$data_recept = $recept->ophalenRecept($gebruiker_id, null);
+/* $data_recept = $recept->ophalenRecept($gebruiker_id, null);
 echo"---------------------------------------------------------------------------------------------------------------------------------<br>";
 echo"Dit is het hele recept: <br><br><pre>";
 var_dump($data_recept);
 
-echo"<br></pre>---------------------------------------------------------------------------------------------------------------------------------<br>";
+echo"<br></pre>---------------------------------------------------------------------------------------------------------------------------------<br>"; */
