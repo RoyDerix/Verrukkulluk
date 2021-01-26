@@ -25,80 +25,16 @@ $keuken_type_id = [2, 6];
 $recept_id = 3;
 $keyword = "courgette";
 
-$boodschappenlijst->receptToevoegen(4, 2);
+$boodschappenlijst->receptToevoegen(3, 2);
 
-$recept_ids = $recept->zoeken($keyword);
+$recepten = $recept->zoeken($keyword);
 echo "<pre>";
-var_dump($recept_ids);
+var_dump($recepten);
 echo "<br><br></pre>";
 
-$data_recept = $recept->ophalenRecept(null, $recept_id);
+$data_recept = $recept->ophalenRecept($gebruiker_id, null);
 echo"---------------------------------------------------------------------------------------------------------------------------------<br>";
 echo"Dit is het hele recept: <br><br><pre>";
 var_dump($data_recept);
 
 echo"<br></pre>---------------------------------------------------------------------------------------------------------------------------------<br>";
-
-$data_art = $art->selecteerArtikel($artikel_id);
-$data_gebr = $gebr->selecteerGebruiker($gebruiker_id);
-
-echo "Artikel: <pre>";
-var_dump($data_art);
-
-echo "</pre><br>Gebruiker: <pre>";
-var_dump($data_gebr);
-
-
-foreach($keuken_type_id as $id) {
-
-    $data_keuken_type = $kt->selecteerKeukenType($id);
-
-
-    if($data_keuken_type['record_type'] == 'K') {
-        echo "</pre><br>Keuken: <pre>";
-        var_dump($data_keuken_type);
-    }
-
-    elseif($data_keuken_type['record_type'] == 'T') {
-        echo "</pre><br>Type: <pre>";
-        var_dump($data_keuken_type);
-    }
-
-}
-
-$recept_id = 1;
-$record_type = "B";
-$data_recept_info = $ri->selecteerReceptinfo($recept_id, $record_type);
-
-echo"</pre><br>Bereidingswijze: <br>";
-foreach($data_recept_info as $info) {
-    echo $info['nummeriekveld'] .". " .$info['tekstveld'] ."<br>";
-}
-
-$recept_id = 2;
-$record_type = "O";
-$data_recept_info = $ri->selecteerReceptinfo($recept_id, $record_type);
-
-
-echo"<br><pre>";
-var_dump($data_recept_info);
-echo"</pre>";
-
-foreach($data_recept_info as $info) {
-    echo"<br><br>Naam: ".$info['gebruiker_naam'];
-    echo"<br>Datum toegevoegd: ".$info['datum'];
-    echo"<br>Opmerking: ".$info['tekstveld'];
-}
-
-$data_ingredient = $ing->selecteerIngredient($recept_id);
-echo"<br><br><pre>";
-var_dump($data_ingredient);
-
-
-$recept_id = 1;
-$gebruiker_id = 2;
-$ri->verwijderenFavoriet($recept_id, $gebruiker_id);
-
-/* $recept_id = 3;
-$score = 5;
-$ri->gevenScore($recept_id, $score); */
