@@ -11,30 +11,60 @@ require_once("lib/boodschappenlijst.php");
 
 $db = new database();
 $conn = $db->getConnectie();
-$art = new artikel($conn);
-$gebr = new gebruiker($conn);
-$kt = new keuken_type($conn);
-$ri = new recept_info($conn);
-$ing = new ingredient($conn);
+$recept_info = new recept_info($conn);
 $recept = new recept($conn);
 $boodschappenlijst = new boodschappenlijst($conn);
 
-$artikel_id = 2;
-$gebruiker_id = 4;
-$keuken_type_id = [2, 6];
-$recept_id = 3;
-$keyword = "mexicaans";
+$recept_id = isset($_GET['recept_id']) ? $_GET['recept_id'] : "";
+$gebruiker_id = isset($_GET['gebruiker_id']) ? $_GET['gebruiker_id'] : "";
+$action = isset($_GET['action']) ? $_GET['action'] : "homepage";
 
-//$boodschappenlijst->receptToevoegen(3, 2);
+switch($action) {
+    
+    //homepage
+    case ("homepage"):
+        $data = $recept->ophalenRecept($gebruiker_id);
+        break;
+    
+    //detailpagina 
+    case ("detailpagina"):
+        $data = $recept->ophalenRecept($gebruiker_id, $recept_id);
+        break;
 
-$recepten = $recept->zoeken($keyword);
-echo "<pre>";
-var_dump($recepten);
-echo "<br><br></pre>";
+    //boodschappen toevoegen
+    case("boodschappen_toevoegen"):
+        $boodschappenlijst->toevoegenRecept($recept_id, $gebruiker_id);
+        $data = $recept->ophalenRecept($gebruiker_id, $recept_id);
+        break;
 
-/* $data_recept = $recept->ophalenRecept($gebruiker_id, null);
-echo"---------------------------------------------------------------------------------------------------------------------------------<br>";
-echo"Dit is het hele recept: <br><br><pre>";
-var_dump($data_recept);
+    //favoriet toevoegen
+    case("favoriet_toevoegen"):
+        $recept_info->toevoegenFavoriet($recept_id, $gebruiker_id);
+        $data = $recept->ophalenRecept($gebruiker_id, $recept_id);
+        break;
 
-echo"<br></pre>---------------------------------------------------------------------------------------------------------------------------------<br>"; */
+    //favoriet verwijderen
+    case("favoriet_verwijderen"):
+        $recept_info->verwijderenFavoriet($recept_id, $gebruiker_id);
+        $data = $recept->ophalenRecept($gebruiker_id, $recept_id);
+        break;
+
+    //score geven
+    case('score_geven'):
+        $score = $_POST['score'];
+        $recept_info->gevenScore($recept_id, $score);
+        $data = $recept->ophalenRecept($gebruiker_id, $recept_id);
+        break;
+
+    //zoeken 
+    case("zoeken"):
+        $keyword = $_POST['keyword'];
+        $data = $recept->zoeken($keyword);
+        break;
+
+    default:
+        echo"Oops, something went wrong here!";
+}
+
+echo"<pre>";
+var_dump($data);

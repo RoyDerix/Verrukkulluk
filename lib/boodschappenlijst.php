@@ -5,7 +5,7 @@ class boodschappenlijst {
     private $connectie;
     private $ingredient;
 
-    public function receptToevoegen($recept_id, $gebruiker_id = null) {
+    public function toevoegenRecept($recept_id, $gebruiker_id = null) {
 
         $ingredienten = $this->ingredient->selecteerIngredient($recept_id);
         foreach($ingredienten as $ingredient) {

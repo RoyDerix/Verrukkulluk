@@ -117,7 +117,7 @@ class recept {
             $totale_calorieen += $calorieen_per_ingredient;
         }
 
-        return(round($totale_calorieen));
+        return($totale_calorieen);
     }
 
     private function berekenenPrijs($ingredienten) {
