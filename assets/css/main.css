@@ -1,0 +1,82 @@
+/**
+ VERRUKKULLUK MAIN.CSS
+ */
+
+
+:root {
+
+    /* FONTS */
+    --heading: "pretty_lilyregular";
+
+    /* COLORS */
+    --dark-brown: #402214;
+    --lighter-brown:  #774231;
+    --lightest-brown: #aa4b1b;
+
+    --darker-red: #b31714;
+    --lighter-red: #dc3439;
+
+    --kahki: #fff0d6;
+
+    --darker-orange: #eb8d1f;
+    --lighter-orange: #fca01f;
+
+    --darker-green: #6e8722;
+    --lighter-green: #95b82d;
+
+    --white: #FFF;
+    --black: #000;
+
+}
+
+/** HEADING **/
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--heading) !important;
+}
+
+h1 {
+    font-size: 52px;
+}
+
+h2 {
+    font-size: 42px;
+}
+
+h3, h4, h5 {
+    font-size: 32px;
+}
+
+
+/** HTML / BODY **/
+html, body {
+    font-family: "Helvetica Neue", Arial, SansSerif;
+    font-size: 16px;
+}
+
+/* blokken homepage */
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.recept_foto {
+    background-color: #FFF;
+    padding: 0px;
+}
+
+.info {
+    background-color: #FFF;
+    padding: 15px;
+}
+
+.type_keuken {
+    overflow: hidden;
+}
+
+.type{
+    float: left;
+}
+
+.keuken{
+    float: right;
+}

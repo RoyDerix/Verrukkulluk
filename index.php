@@ -1,5 +1,18 @@
 <?php
 
+require_once("./vendor/autoload.php");
+
+/// Twig koppelen:
+$loader = new \Twig\Loader\FilesystemLoader("./templates");
+/// VOOR PRODUCTIE:
+/// $twig = new \Twig\Environment($loader), ["cache" => "./cache/cc"]);
+
+/// VOOR DEVELOPMENT:
+$twig = new \Twig\Environment($loader, ["debug" => true ]);
+$twig->addExtension(new \Twig\Extension\DebugExtension());
+
+
+
 require_once("lib/database.php");
 require_once("lib/artikel.php");
 require_once("lib/gebruiker.php");
@@ -15,6 +28,9 @@ $recept_info = new recept_info($conn);
 $recept = new recept($conn);
 $boodschappenlijst = new boodschappenlijst($conn);
 
+$boodschappenlijst->toevoegenRecept(3, 2);
+
+
 $recept_id = isset($_GET['recept_id']) ? $_GET['recept_id'] : "";
 $gebruiker_id = isset($_GET['gebruiker_id']) ? $_GET['gebruiker_id'] : "";
 $action = isset($_GET['action']) ? $_GET['action'] : "homepage";
@@ -24,11 +40,15 @@ switch($action) {
     //homepage
     case ("homepage"):
         $data = $recept->ophalenRecept($gebruiker_id);
+        $template = 'homepage.html.twig';
+        $title = 'homepage';
         break;
     
     //detailpagina 
     case ("detailpagina"):
         $data = $recept->ophalenRecept($gebruiker_id, $recept_id);
+        $template = 'detail.html.twig';
+        $title = 'detail pagina';
         break;
 
     //boodschappen toevoegen
@@ -66,5 +86,13 @@ switch($action) {
         echo"Oops, something went wrong here!";
 }
 
-echo"<pre>";
-var_dump($data);
+
+
+
+/// Onderstaande code schrijf je idealiter in een layout klasse of iets dergelijks
+/// Juiste template laden, in dit geval "homepage"
+$template = $twig->load($template);
+
+
+/// En tonen die handel!
+echo $template->render(["title" => $title, "data" => $data]);

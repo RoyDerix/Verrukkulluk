@@ -1,0 +1,94 @@
+{# Opnemen van de "Main" file #}
+{% extends "main.html.twig" %}
+
+{# nu de block content op in de main pagina vullen #}
+{% block content %}
+    {# Dit is commentaar #}
+
+    <div class="row p-5 g-5">
+
+        {% for record in data %}
+        <div class="col-lg-6">
+            <div class="card">
+                <img src="{{record.receptfoto}}" class="card-img-top">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h1 class="card-title">{{record.titel_recept}}</h1>
+                        </div>
+                        <div class="col-lg-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h4>Type: {{record.type}}</h4>
+                        </div>
+                        <div class="col-lg-6">
+                            <h4>Keuken: {{record.keuken}}</h4>
+                        </div>
+                    </div>
+                    <p class="card-text">
+                        {{record.samenvatting_beschrijving}}
+                    </p>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <a href="#" class="btn btn-primary"><h4>Smullen!</h3></a>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-4">
+                                    <i class="fas fa-users"> 4</i>
+                                </div>
+
+                                <div class="col-4">
+                                    <i class="fas fa-euro-sign">{{(record.totale_prijs / 4)|round(2)}} p.p.</i>
+                                </div>
+
+                                <div class="col-4">
+                                    <i class="fas fa-fire-alt">{{(record.totale_calorieen / 4)|round}} p.p.</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+    {#
+    <h1>Heading #1</h1>
+    <h2>Heading #2</h2>
+    <h3>Heading #3 t/m 5</h3>
+
+    <h4>Dit is de template {{  title }}</h4>
+
+    <ul>
+    {% for record in data %}
+        <li>
+            <img src="{{ record.foto }}" style="width: 100px; height: 100px;">
+
+            {{ record.title }}
+            <ul>
+                {% for ingr in record.ingredienten %}
+                    <li>
+                        <span {% if ingr.id < 2 %}style='color: #F00'{% endif %}>{{  ingr.naam }}</span>
+
+                        {%  if ingr.id == 3 %}
+                            <strong>Dit is ID 3!</strong>
+                        {%  endif  %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+    <ul> 
+#}
+
+{% endblock %}
