@@ -1,0 +1,92 @@
+{% extends "main.html.twig" %}
+
+
+{% block banner %}
+
+    <div class="container">
+        <div id="01" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#01" data-slide-to="0" class="active"></li>
+                <li data-target="#01" data-slide-to="1"></li>
+                <li data-target="#01" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" style="height: 400px;">
+                <div class="carousel-item active">
+                    <img src="afbeeldingen/naanbroodpizza.jpg" class="d-block w-100">
+                </div>
+                <div class="carousel-item">
+                    <img src="afbeeldingen/courgettesoep.jpg" class="d-block w-100">
+                </div>
+                <div class="carousel-item">
+                    <img src="afbeeldingen/enchiladas.jpg" class="d-block w-100">
+                </div>
+            </div>
+        </div>
+        <div class="carousel-text">
+            <div class="text-left">
+                <img src="assets/img/logo-v2.png" style="width: 300px"/>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+
+{% block content %}
+
+    {% for record in data %}
+
+        <div class="card">
+            <div class="row no-gutters">
+                <div class="col-md-5">
+                    <img class="card-img" src="{{record.receptfoto}}">
+                </div>
+                <div class="col-md-7">
+                    <div class="card-body">
+                        <h5 class="card-title">{{record.titel_recept}}</h5>
+                        <p class="card-text">{{record.receptbeschrijving}}</p>
+                        <a href="#" class="btn btn-primary">Op lijst</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+
+
+    <div class="row" style="margin-top: 30px">
+		<div class="col-md-12">
+			<div class="tabbable" id="tabs-931106">
+				<ul class="nav nav-tabs">
+					<li class="nav-item">
+						<a class="nav-link active show" href="#tab1" data-toggle="tab">Section 1</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#tab2" data-toggle="tab">Section 2</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="tab1">
+						<p>
+							I'm in Section 1.
+						</p>
+					</div>
+					<div class="tab-pane" id="tab2">
+						<p>
+							Howdy, I'm in Section 2.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+{% endblock %}

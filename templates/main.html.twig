@@ -10,6 +10,9 @@
 
     <link rel="stylesheet" type="text/css" href="assets/css/main.css" />
 
+
+
+
     <script type="text/javascript" language="javascript" src="assets/jquery/jquery-3.5.1.js"></script>
     <script type="text/javascript" language="javascript" src="assets/bootstrap/js/bootstrap.js"></script>
 
@@ -18,21 +21,16 @@
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-md-12" style="background-color: #FF0">
-            <img src="assets/img/logo-v2.png"/>
-            <h1>Carousel, Logo en Menu</h1>
-        </div>
+        {% block banner %}
+        {% endblock %}
     </div>
 
     <div class="row">
-        <div class="col-md-3" style="background-color: #F00">
-            <h2>Agenda</h2>
-            <i class="fa fa-calendar"></i> FontAwesome <a href="https://fontawesome.com/icons?d=gallery&m=free">Documentation</a><br>
-            <i class="fa fa-file-pdf"></i><a href="https://www.layoutit.com/build">Layout-it</a>
-
-
+        <div class="col-lg-3 p-5">
+            <p>{% include "agenda.html.twig" %}</p>
+            <p>{% include "login.html.twig" %}</p>
         </div>
-        <div class="col-md-9" style="background-color: #FFF">
+        <div class="col-lg-9 g-5 p-5">
             {%  block content %}
             {%  endblock %}
         </div>
@@ -40,7 +38,7 @@
 
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" style="background-color: var(--darker-orange)">
             <h1>Footer</h1>
         </div>
     </div>
