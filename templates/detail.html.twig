@@ -3,32 +3,19 @@
 
 {% block banner %}
 
-    <div class="container">
-        <div id="01" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#01" data-slide-to="0" class="active"></li>
-                <li data-target="#01" data-slide-to="1"></li>
-                <li data-target="#01" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner" style="height: 400px;">
-                <div class="carousel-item active">
-                    <img src="afbeeldingen/naanbroodpizza.jpg" class="d-block w-100">
-                </div>
-                <div class="carousel-item">
-                    <img src="afbeeldingen/courgettesoep.jpg" class="d-block w-100">
-                </div>
-                <div class="carousel-item">
-                    <img src="afbeeldingen/enchiladas.jpg" class="d-block w-100">
-                </div>
-            </div>
+    {% for record in data %}
+        <div style="height: 400px; overflow: hidden;">
+            <img src="{{record.receptfoto}}" class="w-100">
         </div>
         <div class="carousel-text">
             <div class="text-left">
-                <img src="assets/img/logo-v2.png" style="width: 300px"/>
+                <a href="index.php">
+                    <img src="assets/img/logo-v2.png" style="width: 300px"/>
+                </a>
             </div>
         </div>
-    </div>
 
+    {% endfor %}
 
 {% endblock %}
 
@@ -52,40 +39,48 @@
                 </div>
             </div>
         </div>
+
+        <div class="row" style="margin-top: 30px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+            <div class="col-md-12">
+                <div class="tabbable" id="tabs-931106">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active show" href="#tab1" data-toggle="tab" style="border-width: 5px">
+                                <h4 style="color: var(--lighter-green)">Ingrediënten</h4>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tab2" data-toggle="tab" style="border-width: 5px">
+                                <h4 style="color: var(--lighter-green)">Bereidingswijze</h4>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tab3" data-toggle="tab" style="border-width: 5px">
+                                <h4 style="color: var(--lighter-green)">Opmerkingen</h4>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+                            <p>
+                                Alle ingrediënten
+                            </p>
+                        </div>
+                        <div class="tab-pane" id="tab2">
+                            <p>
+                                Hele bereidingswijze
+                            </p>
+                        </div>
+                        <div class="tab-pane" id="tab3">
+                            <p>
+                                Alle opmerkingen
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endfor %}
-
-
-
-    <div class="row" style="margin-top: 30px">
-		<div class="col-md-12">
-			<div class="tabbable" id="tabs-931106">
-				<ul class="nav nav-tabs">
-					<li class="nav-item">
-						<a class="nav-link active show" href="#tab1" data-toggle="tab">Section 1</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#tab2" data-toggle="tab">Section 2</a>
-					</li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="tab1">
-						<p>
-							I'm in Section 1.
-						</p>
-					</div>
-					<div class="tab-pane" id="tab2">
-						<p>
-							Howdy, I'm in Section 2.
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
-
 
 
 

@@ -10,40 +10,37 @@
 
     <link rel="stylesheet" type="text/css" href="assets/css/main.css" />
 
-
-
-
-    <script type="text/javascript" language="javascript" src="assets/jquery/jquery-3.5.1.js"></script>
-    <script type="text/javascript" language="javascript" src="assets/bootstrap/js/bootstrap.js"></script>
-
 </html>
 <body>
-<div class="container-fluid">
+    <div class="container-fluid">
 
-    <div class="row">
-        {% block banner %}
-        {% endblock %}
+        <div class="row">
+            {% block banner %}
+            {% endblock %}
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 p-5">
+                <p>{% include "agenda.html.twig" %}</p>
+                <p>{% include "login.html.twig" %}</p>
+            </div>
+            <div class="col-lg-9 g-5 p-5">
+                {%  block content %}
+                {%  endblock %}
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12" style="background-color: var(--darker-orange)">
+                <h1>Footer</h1>
+            </div>
+        </div>
+
+
     </div>
 
-    <div class="row">
-        <div class="col-lg-3 p-5">
-            <p>{% include "agenda.html.twig" %}</p>
-            <p>{% include "login.html.twig" %}</p>
-        </div>
-        <div class="col-lg-9 g-5 p-5">
-            {%  block content %}
-            {%  endblock %}
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-md-12" style="background-color: var(--darker-orange)">
-            <h1>Footer</h1>
-        </div>
-    </div>
-
-
-</div>
+    <script type="text/javascript" language="javascript" src="assets/jquery/jquery-min.js"></script>
+    <script type="text/javascript" language="javascript" src="assets/bootstrap/js/bootstrap.js"></script>
 
 </body>
