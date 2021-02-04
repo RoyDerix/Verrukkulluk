@@ -57,11 +57,13 @@
                                 </h1>
                             </div>
                             <div class="col-lg-4">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
+                                {% for i in 1..5 %}
+                                    {% if loop.index <= record.score %}
+                                        <i class="fas fa-star hpstar" data-value="{{loop.index}}"></i>
+                                    {% else %}
+                                        <i class="far fa-star hpstar" data-value="{{loop.index}}"></i>
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="row">
@@ -72,7 +74,7 @@
                                 <h4>Keuken: {{record.keuken}}</h4>
                             </div>
                         </div>
-                        <p class="card-text" style="min-height: 100px">
+                        <p class="card-text" style="min-height: 100px; font-size: 15;">
                             {{record.samenvatting_beschrijving}}
                         </p>
                         <div class="row">

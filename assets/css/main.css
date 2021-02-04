@@ -44,7 +44,7 @@ h3, h4, h5 {
 
 /** HTML / BODY **/
 html, body {
-    font-family: "Helvetica Neue", Arial, SansSerif;
+    font-family: Georgia, serif;    
     font-size: 16px;
 }
 
@@ -62,4 +62,20 @@ html, body {
     top: 20px;
     width: 100%;
     color: #FFF;
+}
+
+.fa-star {
+    font-size: 20px;
+    color: #FF0;
+    width: 20px;
+}
+
+.fa-star:hover:not(.hpstar) {
+    font-weight: bold;
+    color: rgb(255, 230, 0);
+    cursor: pointer;
+}
+
+.red {
+    color: #FF0;
 }

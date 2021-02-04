@@ -11,8 +11,6 @@ $loader = new \Twig\Loader\FilesystemLoader("./templates");
 $twig = new \Twig\Environment($loader, ["debug" => true ]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
-
-
 require_once("lib/database.php");
 require_once("lib/artikel.php");
 require_once("lib/gebruiker.php");
@@ -34,6 +32,7 @@ $boodschappenlijst->toevoegenRecept(3, 2);
 $recept_id = isset($_GET['recept_id']) ? $_GET['recept_id'] : "";
 $gebruiker_id = isset($_GET['gebruiker_id']) ? $_GET['gebruiker_id'] : "";
 $action = isset($_GET['action']) ? $_GET['action'] : "homepage";
+$template = "";
 
 switch($action) {
     
@@ -71,9 +70,13 @@ switch($action) {
 
     //score geven
     case('score_geven'):
-        $score = $_POST['score'];
+        $score = $_POST['rating'];
         $recept_info->gevenScore($recept_id, $score);
-        $data = $recept->ophalenRecept($gebruiker_id, $recept_id);
+        if (isset($_POST['rating'])) {
+            $score = $_POST['rating'];
+            echo "score aangekomen: ";
+            echo $score;
+        }
         break;
 
     //zoeken 
@@ -91,8 +94,10 @@ switch($action) {
 
 /// Onderstaande code schrijf je idealiter in een layout klasse of iets dergelijks
 /// Juiste template laden, in dit geval "homepage"
-$template = $twig->load($template);
+if($template) {
+    $template = $twig->load($template);
 
 
-/// En tonen die handel!
-echo $template->render(["title" => $title, "data" => $data]);
+    /// En tonen die handel!
+    echo $template->render(["title" => $title, "data" => $data]);
+}
