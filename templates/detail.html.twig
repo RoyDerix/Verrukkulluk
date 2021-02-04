@@ -32,8 +32,59 @@
                 </div>
                 <div class="col-md-7">
                     <div class="card-body">
-                        <h5 class="card-title">{{record.titel_recept}}</h5>
-                        <p class="card-text">{{record.receptbeschrijving}}</p>
+                        <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <h1 class="card-title" style="color: var(--lighter-green)">
+                                    {{record.titel_recept}}
+                                </h1>
+                            </div>
+                            <div class="col-lg-4">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h4>Type: {{record.type}}</h4>
+                            </div>
+                            <div class="col-lg-6">
+                                <h4>Keuken: {{record.keuken}}</h4>
+                            </div>
+                        </div>
+                        <p class="card-text">
+                            {{record.samenvatting_beschrijving}}
+                        </p>
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <a href="index.php?recept_id={{record.id}}&action=detailpagina" 
+                                    class="btn btn-primary"
+                                    style="background-color: var(--darker-red);
+                                            border-color: var(--darker-red);">
+                                    <h4>Smullen!</h4></a>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <i class="fas fa-users" style="color: var(--darker-red)"></i> 4
+                                    </div>
+
+                                    <div class="col-4">
+                                        <i class="fas fa-euro-sign" style="color: var(--darker-red)"></i> 
+                                        {{((record.totale_prijs / 4)|round(2))|number_format(2, ',', '.')}}
+                                    </div>
+
+                                    <div class="col-4">
+                                        <i class="fas fa-fire-alt" style="color: var(--darker-red)"></i> 
+                                        {{(record.totale_calorieen / 4)|round}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                         <a href="#" class="btn btn-primary">Op lijst</a>
                     </div>
                 </div>

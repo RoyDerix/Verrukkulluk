@@ -1,7 +1,3 @@
-/**
- VERRUKKULLUK MAIN.CSS
- */
-
 
 :root {
 
@@ -45,7 +41,6 @@ h2 {
 h3, h4, h5 {
     font-size: 32px;
 }
-
 
 /** HTML / BODY **/
 html, body {
