@@ -26,11 +26,9 @@ $recept_info = new recept_info($conn);
 $recept = new recept($conn);
 $boodschappenlijst = new boodschappenlijst($conn);
 
-$boodschappenlijst->toevoegenRecept(3, 2);
-
-
+$artikel_id = isset($_GET['artikel_id']) ? $_GET['artikel_id'] : "";
 $recept_id = isset($_GET['recept_id']) ? $_GET['recept_id'] : "";
-$gebruiker_id = isset($_GET['gebruiker_id']) ? $_GET['gebruiker_id'] : "";
+$gebruiker_id = isset($_GET['gebruiker_id']) ? $_GET['gebruiker_id'] : "1";
 $action = isset($_GET['action']) ? $_GET['action'] : "homepage";
 $template = "";
 
@@ -50,22 +48,42 @@ switch($action) {
         $title = 'detail pagina';
         break;
 
-    //boodschappen toevoegen
+    //boodschappen
     case("boodschappen_toevoegen"):
         $boodschappenlijst->toevoegenRecept($recept_id, $gebruiker_id);
-        $data = $recept->ophalenRecept($gebruiker_id, $recept_id);
+        header("Location: index.php?action=boodschappenlijst");
         break;
 
-    //favoriet toevoegen
-    case("favoriet_toevoegen"):
-        $recept_info->toevoegenFavoriet($recept_id, $gebruiker_id);
-        $data = $recept->ophalenRecept($gebruiker_id, $recept_id);
+    case("boodschappen_verwijderen"):
+        $boodschappenlijst->verwijderenArtikel($artikel_id, $gebruiker_id);
+        header("Location: index.php?action=boodschappenlijst");
         break;
 
-    //favoriet verwijderen
-    case("favoriet_verwijderen"):
-        $recept_info->verwijderenFavoriet($recept_id, $gebruiker_id);
-        $data = $recept->ophalenRecept($gebruiker_id, $recept_id);
+    case("lijst_verwijderen"):
+        $boodschappenlijst->verwijderenLijst($gebruiker_id);
+        header("Location: index.php?action=boodschappenlijst");
+        break;
+
+    case("boodschappenlijst"):
+        $data = $boodschappenlijst->ophalenLijst($gebruiker_id);
+        $template = 'boodschappenlijst.html.twig';
+        $title = 'boodschappenlijst';
+        break;
+
+    //favoriet
+    case("favoriet"):
+        if($_POST['rating'] == "no") {
+            $recept_info->toevoegenFavoriet($recept_id, $gebruiker_id);
+        }
+        else {
+            $recept_info->verwijderenFavoriet($recept_id, $gebruiker_id);
+        }
+        
+        break;
+
+    case("favorieten_tonen"):
+
+
         break;
 
     //score geven

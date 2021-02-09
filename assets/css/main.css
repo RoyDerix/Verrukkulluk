@@ -38,8 +38,20 @@ h2 {
     font-size: 42px;
 }
 
-h3, h4, h5 {
+h3 {
     font-size: 32px;
+}
+
+h4 {
+    font-size: 24;
+}
+
+h5 {
+    font-size: 16px;
+}
+
+.green{
+    color: var(--lighter-green);
 }
 
 /** HTML / BODY **/
@@ -64,6 +76,8 @@ html, body {
     color: #FFF;
 }
 
+/* waarderings sterren */
+
 .fa-star {
     font-size: 20px;
     color: #FF0;
@@ -79,3 +93,125 @@ html, body {
 .red {
     color: #FF0;
 }
+
+/* hartje */
+
+.fa-heart {
+    font-size: 50px;
+    color: var(--lighter-red);
+    width: 20px;
+}
+
+.fa-heart:hover:not(.hpheart) {
+    font-weight: bold;
+    color: var(--darker-red);
+    cursor: pointer;
+}
+
+.red {
+    color: #FF0;
+}
+
+/* tabbladen */
+
+.tab-details {
+    max-height: 400px;
+    overflow-y: auto; 
+    overflow-x: hidden;
+  }
+
+  .detail-txt {
+    max-width: 400px; 
+}
+
+/* bereidingswijze */
+
+.circle {
+    width: 65px;
+    height: 65px;   
+    border-radius: 50%;   
+    background: var(--lighter-orange);
+    position: relative;
+    line-height: 10px;
+  }
+
+  .circle-txt {
+      position: absolute;
+      bottom: 50%;
+      width: 100%;
+      text-align: center;
+      color: #FFF;
+      font-weight: bold;
+      font-size: 40px;
+  }
+
+  /* buttons */
+
+  .button-red{
+    background-color: var(--lighter-red);
+    border-color: var(--lighter-red);
+    border-radius: 30px;
+  }
+
+  .button-red:hover{
+    background-color: var(--darker-red);
+    border-color: var(--darker-red);
+  }
+
+  .button-orange{
+    background-color: var(--lighter-orange);
+    border-color: var(--lighter-orange);
+    border-radius: 30px;
+  }
+
+  .button-orange:hover{
+    background-color: var(--darker-orange);
+    border-color: var(--darker-orange);
+  }
+
+
+
+
+  .overlay {
+    height: 0%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #FFF;
+    overflow-y: hidden;
+    transition: 0.5s;
+  }
+  
+  .overlay-content {
+    position: relative;
+    top: 20px;
+    width: 100%;
+    margin-top: 0px;
+  }
+  
+  .overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: var(--lighter-orange);
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .overlay a:hover, .overlay a:focus {
+    color: var(--darker-orange);
+  }
+  
+  .overlay h1:hover, .overlay h1:focus {
+    color: var(--darker-green);
+  }
+
+  .overlay .closebtn {
+    position: absolute;
+    top: 0px;
+    right: 45px;
+    font-size: 60px;
+  }
+  
