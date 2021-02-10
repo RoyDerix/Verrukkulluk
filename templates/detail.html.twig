@@ -9,12 +9,12 @@
         </div>
         <div class="carousel-text">
             <div class="row">
-                <div class="col-6">
+                <div class="col-md-6">
                     <a href="index.php">
                         <img src="assets/img/logo-v2.png" style="width: 300px"/>
                     </a>
                 </div>
-                <div class="col-6">
+                <div class="col-md-6">
                     <div id="myNav" class="overlay">
                         <div class="overlay-content" style="overflow-x: hidden">
                             <div class="row">
@@ -26,14 +26,32 @@
                                 <div class="col-md-4" style="margin-top: 20px">
                                     <a href="index.php?action=boodschappenlijst"><h1 class="green">Boodschappenlijst</h1></a>
                                 </div>
-                                <div class="col-md-3" style="margin-top: 20px;">
+                                <div class="col-md-4" style="margin-top: 20px;">
                                     <a href="index.php?action=favorieten_tonen"><h1 class="green">Favorieten</h1></a>
                                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div style="font-size: 60px; cursor: pointer; color: var(--lighter-orange); text-align: right; margin-right: 30px" onclick="openNav()">&#9776;</div>
+                    <div class="row" style="text-align: right; margin-right: 54px;">
+                        <div class="col-lg-10">
+                            <div class="search-container" style="margin-top: 20px">
+                                <form action="index.php?action=zoeken" method="POST" autocomplete="off">
+                                    <div class="autocomplete">
+                                        <input id="myInput" type="text" placeholder="Zoeken..." name="keyword">
+                                    </div>
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div style="font-size: 60px; 
+                                        cursor: pointer; 
+                                        color: var(--lighter-orange);"
+                                onclick="openNav()">&#9776;
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,6 +67,109 @@
         function closeNav() {
             document.getElementById("myNav").style.height = "0%";
         }
+    </script>
+
+    <script>
+        function autocomplete(inp, arr) {
+
+            var currentFocus;
+            inp.addEventListener("input", function(e) {
+
+                var a, b, i, val = this.value;
+                closeAllLists();
+                if (!val) { return false;}
+                currentFocus = -1;
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                this.parentNode.appendChild(a);
+                for (i = 0; i < arr.length; i++) {
+
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+
+                        b = document.createElement("DIV");
+                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].substr(val.length);
+                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                        b.addEventListener("click", function(e) {
+
+                            inp.value = this.getElementsByTagName("input")[0].value;
+                            closeAllLists();
+                        });
+                        a.appendChild(b);
+                    }
+                }
+            });
+            inp.addEventListener("keydown", function(e) {
+
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+
+                    currentFocus++;
+                    addActive(x);
+                } 
+                
+                else if (e.keyCode == 38) { 
+
+                    currentFocus--;
+                    addActive(x);
+                } 
+                
+                else if (e.keyCode == 13) {
+
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+
+                        if (x) x[currentFocus].click();
+                    }
+                }
+            });
+
+            function addActive(x) {
+
+                if (!x) return false;
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+
+            function removeActive(x) {
+
+                for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+                }
+            }
+
+            function closeAllLists(elmnt) {
+
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+        }
+
+        let suggestions = [{% for record in data %}
+                                "{{record.keuken}}",
+                                "{{record.type}}",
+                                {% for ingredient in record.ingredienten %}
+                                    "{{ingredient.titel_artikel}}",
+                                {% endfor %}
+                            {% endfor %}];
+        var suggestions_once = [...new Set(suggestions)];
+
+        console.log(suggestions_once);
+
+        autocomplete(document.getElementById("myInput"), suggestions_once);
     </script>
 
 {% endblock %}
@@ -98,7 +219,7 @@
                     }
 
                     $.ajax({
-                        url: "index.php?action=favoriet&recept_id={{record.id}}",
+                        url: "index.php?action=favoriet_wijzigen&recept_id={{record.id}}",
                         method: "POST",
                         data: {rating: favo},
                         success: function(response) {

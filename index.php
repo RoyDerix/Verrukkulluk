@@ -71,7 +71,7 @@ switch($action) {
         break;
 
     //favoriet
-    case("favoriet"):
+    case("favoriet_wijzigen"):
         if($_POST['rating'] == "no") {
             $recept_info->toevoegenFavoriet($recept_id, $gebruiker_id);
         }
@@ -82,8 +82,15 @@ switch($action) {
         break;
 
     case("favorieten_tonen"):
-
-
+        $data = [];
+        $recepten = $recept->ophalenRecept($gebruiker_id);
+        foreach($recepten as $recept) {
+            if($recept['mijn_favoriet']) {
+                $data[] = $recept;
+            }
+        }
+        $template = 'homepage.html.twig';
+        $title = 'homepage';
         break;
 
     //score geven
@@ -92,7 +99,7 @@ switch($action) {
         $recept_info->gevenScore($recept_id, $score);
         if (isset($_POST['rating'])) {
             $score = $_POST['rating'];
-            echo "score aangekomen: ";
+            echo "Score aangekomen: ";
             echo $score;
         }
         break;
@@ -101,6 +108,8 @@ switch($action) {
     case("zoeken"):
         $keyword = $_POST['keyword'];
         $data = $recept->zoeken($keyword);
+        $template = 'homepage.html.twig';
+        $title = 'homepage';
         break;
 
     default:

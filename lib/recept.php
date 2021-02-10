@@ -60,9 +60,9 @@ class recept {
     public function zoeken($keyword, $gebruiker_id = null) {
 
         $lijst = [];
-        $alleRecepten = $this->ophalenRecept($gebruiker_id, null);
+        $recepten = $this->ophalenRecept($gebruiker_id, null);
 
-        foreach($alleRecepten as $recept) {
+        foreach($recepten as $recept) {
 
             $recept_encode = json_encode($recept, JSON_INVALID_UTF8_IGNORE);
             $recept_pos = stripos($recept_encode, $keyword);
