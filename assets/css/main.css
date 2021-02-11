@@ -79,6 +79,7 @@ html, body {
     border: none;
     height: 35px;
     border-radius: 18px 0px 0px 18px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.19);
   }
   
 .search-container button {
@@ -92,6 +93,7 @@ html, body {
     cursor: pointer;
     height: 35px;
     border-radius: 0px 18px 18px 0px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.19);
   }
   
 .search-container button:hover {
@@ -131,7 +133,7 @@ html, body {
   }
   
 .autocomplete-active {
-    background-color: DodgerBlue !important; 
+    background-color: var(--lighter-orange) !important; 
     color: #ffffff; 
   }
 
@@ -159,10 +161,6 @@ html, body {
     cursor: pointer;
 }
 
-.red {
-    color: #FF0;
-}
-
 /* hartje */
 
 .fa-heart {
@@ -177,10 +175,6 @@ html, body {
     cursor: pointer;
 }
 
-.red {
-    color: #FF0;
-}
-
 /* tabbladen */
 
 .tab-details {
@@ -189,8 +183,30 @@ html, body {
     overflow-x: hidden;
   }
 
-  .detail-txt {
+.detail-txt {
     max-width: 400px; 
+}
+
+/* scrollbar */
+
+::-webkit-scrollbar {
+  width: 14px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 7px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: var(--lighter-orange); 
+  border-radius: 7px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--darker-orange); 
 }
 
 /* bereidingswijze */
@@ -202,6 +218,7 @@ html, body {
     background: var(--lighter-orange);
     position: relative;
     line-height: 10px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.19);
   }
 
   .circle-txt {
@@ -214,12 +231,25 @@ html, body {
       font-size: 40px;
   }
 
+  /* opmerkingen */
+
+  .avatar {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-position: center center;
+    border: 7px solid var(--lighter-orange);
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.19);
+  }
+
   /* buttons */
 
   .button-red{
     background-color: var(--lighter-red);
     border-color: var(--lighter-red);
     border-radius: 30px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.19);
   }
 
   .button-red:hover{
@@ -231,6 +261,7 @@ html, body {
     background-color: var(--lighter-orange);
     border-color: var(--lighter-orange);
     border-radius: 30px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.19);
   }
 
   .button-orange:hover{
@@ -282,5 +313,39 @@ html, body {
     top: 0px;
     right: 45px;
     font-size: 60px;
+  }
+
+  .overlay-closed {
+    height: 0%;
+  }
+
+  .overlay-open {
+    height: 170px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  }
+
+  .overlay img {
+    width: 250px;
+    margin-left: 20px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .overlay-open {
+      height: 350px;
+    }
+  }
+
+  @media only screen and (max-width: 1000px) {
+    .overlay h1 {
+      font-size: 42px;
+      margin-top: 5px;
+    }
+
+    .overlay img {
+      width: 175px;
+      margin-left: 20px;
+      margin-top: 15px;
+    }
   }
   

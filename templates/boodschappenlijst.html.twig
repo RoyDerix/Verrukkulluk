@@ -1,11 +1,13 @@
 {% extends "main.html.twig" %}
 
-
 {% block banner %}
 
-
-    <div style="height: 400px; overflow: hidden;">
-        <img src="afbeeldingen/boodschappenlijst.jpg" class="w-100">
+    <div class="w-100" style="height: 400px; 
+                                overflow: hidden;
+                                background-image: url('afbeeldingen/boodschappenlijst.jpg');
+                                background-repeat: no-repeat;
+                                background-size: cover;
+                                background-position: center center;">
     </div>
         <div class="carousel-text">
             <div class="row">
@@ -20,7 +22,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <a href="index.php">
-                                        <img src="assets/img/logo-v2.png" style="width: 250px; margin-left: 20px"/>
+                                        <img src="assets/img/logo-v2.png"/>
                                     </a>
                                 </div>
                                 <div class="col-md-4" style="margin-top: 20px">
@@ -38,7 +40,7 @@
                             <div class="search-container" style="margin-top: 20px">
                                 <form action="index.php?action=zoeken" method="POST" autocomplete="off">
                                     <div class="autocomplete">
-                                        <input id="myInput" type="text" placeholder="Zoeken..." name="keyword">
+                                        <input id="myInput" type="text" placeholder="Recept zoeken..." name="keyword">
                                     </div>
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
@@ -58,11 +60,11 @@
 
     <script>
         function openNav() {
-            document.getElementById("myNav").style.height = "20%";
+            document.getElementById("myNav").className += " overlay-open";
         }
 
         function closeNav() {
-            document.getElementById("myNav").style.height = "0%";
+            document.getElementById("myNav").className = "overlay-closed overlay";
         }
     </script>
 
@@ -157,6 +159,7 @@
 
         let suggestions = [{% for record in data %}
                                 "{{record.keuken}}",
+                                "{{record.titel_recept}}",
                                 "{{record.type}}",
                                 {% for ingredient in record.ingredienten %}
                                     "{{ingredient.titel_artikel}}",
@@ -169,14 +172,10 @@
         autocomplete(document.getElementById("myInput"), suggestions_once);
     </script>
 
-
-
 {% endblock %}
 
 
-
 {% block content %}
-    {% set totaal_prijs = 0 %}
     <div class="card">
         <div class="card-body">
             <div class="card-title green">
@@ -199,6 +198,7 @@
                 </div>     
             </div>
             <div class="card-text" style="max-height: 550px; overflow-y: auto; overflow-x: hidden">
+                {% set totaal_prijs = 0 %}
                 {% for record in data %}
                     {% set prijs_artikel = record.prijs_per_artikel %}
                     {% set totaal_prijs = totaal_prijs + (prijs_artikel * record.aantal_verpakkingen) %}
@@ -224,21 +224,21 @@
                                     {{prijs_artikel|number_format(2, ',', '.')}}
                                 </div>
                                 <div class="col-4">
-                                <a class="fas fa-trash-alt" href="index.php?action=boodschappen_verwijderen&artikel_id={{record.artikel_id}}" style="font-size: 20px; color: var(--darker-red)"></a>
+                                <a class="fas fa-trash-alt" 
+                                    href="index.php?action=boodschappen_verwijderen&artikel_id={{record.artikel_id}}" 
+                                    style="font-size: 20px; color: var(--darker-red)"></a>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 {% endfor %}
-
             </div>
+
             <div class="card-text" style="margin-left: 20px; margin-top: 20px;">
                 <div class="row">
                     <div class="col-6">
                             <h1 class="green">Totaal: </h1>
                     </div>
-
                     <div class="col-6">
                         <div class="row">
                             <div class="col-4">
@@ -256,6 +256,5 @@
             </div>
         </div>
     </div>
-
 
 {% endblock %}

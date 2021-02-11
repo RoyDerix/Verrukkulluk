@@ -1,7 +1,5 @@
 {% extends "main.html.twig" %}
 
-
-
 {% block banner %}
 
     <div class="container">
@@ -13,13 +11,34 @@
             </ol>
             <div class="carousel-inner" style="height: 400px;">
                 <div class="carousel-item active">
-                    <img src="afbeeldingen/naanbroodpizza.jpg" class="d-block w-100">
+                    <div class="d-block w-100"
+                        style="height: 400px;
+                                overflow: hidden;
+                                background-image: url('afbeeldingen/naanbroodpizza.jpg');
+                                background-repeat: no-repeat;
+                                background-size: cover;
+                                background-position: center center;">
+                    </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="afbeeldingen/courgettesoep.jpg" class="d-block w-100">
+                    <div class="d-block w-100"
+                        style="height: 400px;
+                                overflow: hidden;
+                                background-image: url('afbeeldingen/courgettesoep.jpg');
+                                background-repeat: no-repeat;
+                                background-size: cover;
+                                background-position: center center;">
+                    </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="afbeeldingen/enchiladas.jpg" class="d-block w-100">
+                    <div class="d-block w-100"
+                        style="height: 400px;
+                                overflow: hidden;
+                                background-image: url('afbeeldingen/enchiladas.jpg');
+                                background-repeat: no-repeat;
+                                background-size: cover;
+                                background-position: center center;">
+                    </div>
                 </div>
                 <a class="carousel-control-prev" href="#carousel" data-slide="prev" style="width: 0px">
                 <span class="carousel-control-prev-icon"></span> 
@@ -42,7 +61,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <a href="index.php">
-                                        <img src="assets/img/logo-v2.png" style="width: 250px; margin-left: 20px"/>
+                                        <img src="assets/img/logo-v2.png"/>
                                     </a>
                                 </div>
                                 <div class="col-md-4" style="margin-top: 20px">
@@ -60,7 +79,7 @@
                             <div class="search-container" style="margin-top: 20px">
                                 <form action="index.php?action=zoeken" method="POST" autocomplete="off">
                                     <div class="autocomplete">
-                                        <input id="myInput" type="text" placeholder="Zoeken..." name="keyword">
+                                        <input id="myInput" type="text" placeholder="Recept zoeken..." name="keyword">
                                     </div>
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
@@ -79,14 +98,13 @@
         </div>
     </div>
     
-
     <script>
         function openNav() {
-            document.getElementById("myNav").style.height = "20%";
+            document.getElementById("myNav").className += " overlay-open";
         }
 
         function closeNav() {
-            document.getElementById("myNav").style.height = "0%";
+            document.getElementById("myNav").className = "overlay-closed overlay";
         }
     </script>
 
@@ -182,6 +200,7 @@
         let suggestions = [{% for record in data %}
                                 "{{record.keuken}}",
                                 "{{record.type}}",
+                                "{{record.titel_recept}}",
                                 {% for ingredient in record.ingredienten %}
                                     "{{ingredient.titel_artikel}}",
                                 {% endfor %}
@@ -192,8 +211,6 @@
 
         autocomplete(document.getElementById("myInput"), suggestions_once);
     </script>
-
-
 
 {% endblock %}
 
@@ -207,8 +224,12 @@
             {% for record in data %}
                 <div class="col-lg-6">
                     <div class="card">
-                        <div style="height: 200px; overflow: hidden;">
-                            <img src="{{record.receptfoto}}" class="card-img-top">
+                        <div style="background-image: url('{{record.receptfoto}}');
+                                    background-repeat: no-repeat;
+                                    background-size: cover;
+                                    background-position: center center;
+                                    height: 250px;
+                                    overflow: hidden;">
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -228,10 +249,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6 green">
+                                <div class="col-sm-6 green">
                                     <h3>Type: {{record.type}}</h3>
                                 </div>
-                                <div class="col-lg-6 green">
+                                <div class="col-sm-6 green">
                                     <h3>Keuken: {{record.keuken}}</h3>
                                 </div>
                             </div>
@@ -267,6 +288,7 @@
                 </div>
             {% endfor %}
         </div>
+    
     {% else %}
         <div class="row g-5">
             <div class="col-6">
