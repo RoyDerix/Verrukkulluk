@@ -66,7 +66,29 @@ html, body {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.row-flex {
+  display: flex;
+  flex-wrap: wrap;
+  }
+
+  .content {
+    height: 100%;
+  }
+
 /* Zoeken */
+
+.search-box {
+  text-align: right; 
+  margin-right: 54px;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .search-box {
+    text-align: left; 
+    margin-left: 10px;
+  }
+}
 
 .search-container {
     border-radius: 18px;
@@ -95,6 +117,26 @@ html, body {
     border-radius: 0px 18px 18px 0px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.19);
   }
+
+@media only screen and (max-width: 768px) {
+  .search-container button {
+    position: absolute;
+    float: left;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: var(--lighter-orange);
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    height: 35px;
+    border-radius: 0px 18px 18px 0px;
+    box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.19);
+  }
+}
+
+
+
   
 .search-container button:hover {
     background: var(--darker-orange);
@@ -161,6 +203,12 @@ html, body {
     cursor: pointer;
 }
 
+/* prullenbak */
+
+.fa-trash-alt:hover {
+  cursor: pointer;
+}
+
 /* hartje */
 
 .fa-heart {
@@ -169,7 +217,7 @@ html, body {
     width: 20px;
 }
 
-.fa-heart:hover:not(.hpheart) {
+.fa-heart:hover {
     font-weight: bold;
     color: var(--darker-red);
     cursor: pointer;
@@ -340,6 +388,7 @@ html, body {
     .overlay h1 {
       font-size: 42px;
       margin-top: 5px;
+      margin-left: 30px;
     }
 
     .overlay img {
@@ -347,5 +396,16 @@ html, body {
       margin-left: 20px;
       margin-top: 15px;
     }
+  }
+
+  .aantal {
+    display: inline; 
+    border: groove;
+    padding: 3px;
+  }
+
+  .fa-minus:hover, .fa-plus:hover {
+    cursor: pointer;
+    color: var(--darker-green);
   }
   

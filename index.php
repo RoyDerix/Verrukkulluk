@@ -2,12 +2,8 @@
 
 require_once("./vendor/autoload.php");
 
-/// Twig koppelen:
 $loader = new \Twig\Loader\FilesystemLoader("./templates");
-/// VOOR PRODUCTIE:
-/// $twig = new \Twig\Environment($loader), ["cache" => "./cache/cc"]);
 
-/// VOOR DEVELOPMENT:
 $twig = new \Twig\Environment($loader, ["debug" => true ]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
@@ -54,9 +50,11 @@ switch($action) {
         header("Location: index.php?action=boodschappenlijst");
         break;
 
-    case("boodschappen_verwijderen"):
+    case("artikel_verwijderen"):
+        if(isset($_POST['artikel_id'])) {
+            $artikel_id = $_POST['artikel_id'];
+        }
         $boodschappenlijst->verwijderenArtikel($artikel_id, $gebruiker_id);
-        header("Location: index.php?action=boodschappenlijst");
         break;
 
     case("lijst_verwijderen"):
@@ -68,6 +66,19 @@ switch($action) {
         $data = $boodschappenlijst->ophalenLijst($gebruiker_id);
         $template = 'boodschappenlijst.html.twig';
         $title = 'boodschappenlijst';
+        break;
+    
+    case("min_artikel"):
+        $artikel_id = $_POST['artikel_id'];
+        $aantal_verpakkingen = $boodschappenlijst->minArtikel($artikel_id, $gebruiker_id);
+        if($aantal_verpakkingen < 1) {
+            header("Location: index.php?action=artikel_verwijderen&artikel_id=$artikel_id");
+        }
+        break;
+
+    case("plus_artikel"):
+        $artikel_id = $_POST['artikel_id'];
+        $boodschappenlijst->plusArtikel($artikel_id, $gebruiker_id);
         break;
 
     //favoriet
@@ -116,15 +127,9 @@ switch($action) {
         echo"Oops, something went wrong here!";
 }
 
-
-
-
-/// Onderstaande code schrijf je idealiter in een layout klasse of iets dergelijks
-/// Juiste template laden, in dit geval "homepage"
 if($template) {
+
     $template = $twig->load($template);
 
-
-    /// En tonen die handel!
     echo $template->render(["title" => $title, "data" => $data]);
 }

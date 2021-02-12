@@ -7,6 +7,33 @@ class boodschappenlijst {
     private $artikel;
 
 
+    public function plusArtikel($artikel_id, $gebruiker_id) {
+        $sql = "SELECT * FROM boodschappen WHERE artikel_id = $artikel_id
+                                            AND gebruiker_id = $gebruiker_id";
+        $result = mysqli_query($this->connectie, $sql);
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        $aantal_verpakkingen = $row['aantal_verpakkingen'];
+        $aantal_verpakkingen += 1;
+        $sql = "UPDATE boodschappen 
+                SET aantal_verpakkingen = $aantal_verpakkingen
+                WHERE artikel_id = $artikel_id AND gebruiker_id = $gebruiker_id";
+        $result = mysqli_query($this->connectie, $sql);
+    }
+
+    public function minArtikel($artikel_id, $gebruiker_id) {
+        $sql = "SELECT * FROM boodschappen WHERE artikel_id = $artikel_id
+                AND gebruiker_id = $gebruiker_id";
+        $result = mysqli_query($this->connectie, $sql);
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        $aantal_verpakkingen = $row['aantal_verpakkingen'];
+        $aantal_verpakkingen -= 1;
+        $sql = "UPDATE boodschappen 
+                SET aantal_verpakkingen = $aantal_verpakkingen
+                WHERE artikel_id = $artikel_id AND gebruiker_id = $gebruiker_id";
+        $result = mysqli_query($this->connectie, $sql);
+        return($aantal_verpakkingen);
+    }
+
     public function verwijderenLijst($gebruiker_id) {
         $sql = "DELETE FROM boodschappen WHERE gebruiker_id = $gebruiker_id";
         $result = mysqli_query($this->connectie, $sql);
