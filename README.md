@@ -1,3 +1,3 @@
 # verrukkulluk
 
-<img src="../Verrukkulluk_bestanden/screenshots/homepage.png"/>
+<img src="assets/screenshots/homepage.png"/>
