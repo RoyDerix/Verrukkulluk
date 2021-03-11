@@ -23,13 +23,19 @@
         </div>
 
         <div class="row g-5 p-5">
-            <div class="col-lg-3" style="margin-top: 33px">
+            <div class="col-lg-3 agenda-groot" style="margin-top: 33px">
                 <p>{% include "agenda.html.twig" %}</p>
                 <p>{% include "login.html.twig" %}</p>
             </div>
+
             <div class="col-lg-9">
                 {%  block content %}
                 {%  endblock %}
+            </div>
+
+            <div class="col-lg-3 agenda-klein" style="margin-top: 33px">
+                <p>{% include "agenda.html.twig" %}</p>
+                <p>{% include "login.html.twig" %}</p>
             </div>
         </div>
 
