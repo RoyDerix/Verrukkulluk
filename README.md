@@ -8,3 +8,17 @@ Verrukkulluk is een receptenwebsite. Gebruikers kunnen deze recepten bekijken, i
 
 <img src="assets/screenshots/paginas.png"/>
 
+## Technologieën
+
+De back-end applicatie heb ik geschreven in PHP, met behulp van een MySQL database.
+De front-end applicatie heb ik geschreven in HTML en CSS met behulp van template engine TWIG.
+
+De volgende techologieën heb ik gebruikt:
+
+- PHP / JavaScript
+- Twig
+- HTML / CSS
+- MySQL
+- Restful API (POST/GET/DELETE)
+- JSON
+- Apache
