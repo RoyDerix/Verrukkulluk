@@ -1,4 +1,4 @@
 # verrukkulluk
 
-<img src="assets/screenshots/homepage.png/>
+<img src="assets/screenshots/homepage.png"/>
 
