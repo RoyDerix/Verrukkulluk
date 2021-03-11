@@ -22,3 +22,16 @@ De volgende techologieën heb ik gebruikt:
 - Restful API (POST/GET/DELETE)
 - JSON
 - Apache
+
+## Methoden & Technieken
+
+### Entity Relationship Diagram
+
+<img src="assets/screenshots/ERD-Verrukkulluk.png" />
+
+
+### Application Structure Diagram / Functionele Decompositie
+
+Dit voorbeeld toont het proces voor het ophalen van ingrediënten.
+
+<img src="assets/screenshots/ASD.png" />
