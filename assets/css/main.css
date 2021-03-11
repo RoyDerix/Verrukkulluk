@@ -370,21 +370,22 @@ html, body {
   .overlay-open {
     height: 170px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
   }
 
   .overlay img {
     width: 250px;
     margin-left: 20px;
   }
-
   @media only screen and (max-width: 768px) {
+
     .overlay-open {
       height: 350px;
     }
   }
 
   @media only screen and (max-width: 1000px) {
+
+
     .overlay h1 {
       font-size: 42px;
       margin-top: 5px;
