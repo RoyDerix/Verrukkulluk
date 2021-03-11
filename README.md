@@ -8,6 +8,7 @@ Verrukkulluk is een receptenwebsite. Gebruikers kunnen deze recepten bekijken, i
 
 <img src="assets/screenshots/paginas.png"/>
 
+
 ## Technologieën
 
 De back-end applicatie heb ik geschreven in PHP, met behulp van een MySQL database.  
@@ -23,11 +24,13 @@ De volgende techologieën heb ik gebruikt:
 - JSON
 - Apache
 
+
 ## Methoden & Technieken
 
 ### Entity Relationship Diagram
 
 <img src="assets/screenshots/ERD-Verrukkulluk.png" />
+
 
 
 ### Application Structure Diagram / Functionele Decompositie
