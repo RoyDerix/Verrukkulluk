@@ -16,9 +16,10 @@ De front-end applicatie heb ik geschreven in HTML en CSS met behulp van template
 
 De volgende techologieën heb ik gebruikt:
 
-- PHP / JavaScript
+- PHP / JavaScript / jQuery
 - Twig
 - HTML / CSS
+- Bootstrap
 - MySQL
 - Restful API (POST/GET/DELETE)
 - JSON
