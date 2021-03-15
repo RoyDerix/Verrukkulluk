@@ -25,7 +25,7 @@ De volgende techologieën heb ik gebruikt:
 - JSON
 - Apache
 
-
+  
 ## Methoden & Technieken
 
 ### Entity Relationship Diagram
