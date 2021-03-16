@@ -39,3 +39,7 @@ De volgende techologieën heb ik gebruikt:
 Dit voorbeeld toont het proces voor het ophalen van ingrediënten.
 
 <img src="assets/screenshots/ASD.png" />
+
+## Andere projecten:
+
+VacIT! https://github.com/RoyDerix/vacit
